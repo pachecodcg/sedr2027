@@ -1,0 +1,2294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SeDR Abstract Submission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Augusta University palette, strictly enforced */
+  --navy:#003359;
+  --navy-dk:#002240;
+  --navy-mid:#0a4a75;
+  --navy-lt:#336685;
+  --navy-pale:#5c8da8;
+  --green:#44D62C;
+  --green-dk:#38b024;
+  --green-lt:#5ae048;
+  --green-pale:#a8eea0;
+  --green-bg:#d9f5d5;
+  --silver:#A5ACAF;
+  --silver-lt:#c5cacc;
+  --silver-lt2:#d0d5d8;
+  --silver-bg:#f0f2f3;
+  --page:#EEEEEE;
+  --ink:#002240;
+  --ink-soft:#58676e;
+  --mont:'Montserrat',system-ui,sans-serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--page);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:14px;
+  font-weight:400;
+  line-height:1.55;
+}
+a{color:var(--navy-mid);text-decoration:none;font-weight:600;}
+a:hover{text-decoration:underline;}
+
+/* ============ KICKER, the signature element ============ */
+.kicker{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--mont);font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--green-dk);
+  margin:0 0 10px;
+}
+.kicker::before{
+  content:"";display:block;width:16px;height:2px;
+  background:var(--green);flex:0 0 16px;
+}
+.kicker.on-dark{color:var(--green);}
+.kicker.on-dark::before{background:var(--green);}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#002240 0%,#003359 60%,#0a4a75 100%);
+  padding:26px 26px 27px;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 12% 18%, rgba(68,214,44,0.06), transparent 55%);
+  pointer-events:none;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 88% 92%, rgba(165,172,175,0.04), transparent 55%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:1;}
+.hero-badge{
+  display:inline-block;background:var(--green);color:var(--navy-dk);
+  font-family:var(--mont);font-size:10px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;padding:4px 10px;border-radius:3px;margin:0 0 14px;
+}
+.hero h1{
+  font-family:var(--mont);font-weight:700;
+  font-size:clamp(19px,3vw,22px);letter-spacing:-0.2px;
+  color:#fff;margin:0 0 8px;line-height:1.25;
+}
+.hero p{
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--silver-lt);margin:0;max-width:720px;
+}
+.hero-stripe{
+  position:absolute;left:0;bottom:0;width:100%;height:3px;
+  background:var(--green);transform-origin:left;
+  animation:stripeIn 0.9s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes stripeIn{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+/* ============ LAYOUT ============ */
+.shell{
+  display:flex;align-items:flex-start;gap:26px;
+  max-width:1320px;margin:0 auto;padding:26px 26px 90px;
+}
+
+/* ============ SIDEBAR ============ */
+.side{
+  width:268px;flex:0 0 268px;background:#fff;border-radius:8px;
+  border:1px solid #e3e6e8;
+  border-top:2px solid var(--navy);
+  box-shadow:0 1px 2px rgba(0,51,89,0.04);
+  overflow:hidden;animation:fadeUp .5s ease both;
+}
+.side-head{
+  background:var(--navy);padding:13px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.side-head h2{
+  margin:0;font-family:var(--mont);font-size:11px;font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;color:#fff;
+}
+.side-head .count{
+  font-family:var(--mont);font-size:9px;font-weight:800;letter-spacing:1px;
+  color:var(--green);
+}
+.side ul{list-style:none;margin:0;padding:8px 0;}
+.side li{border-bottom:1px solid var(--silver-bg);}
+.side li:last-child{border-bottom:none;}
+.side button{
+  display:flex;align-items:center;gap:10px;width:100%;
+  background:none;border:none;border-left:3px solid transparent;
+  text-align:left;padding:11px 20px 11px 17px;cursor:pointer;
+  font-family:var(--sans);font-size:13.5px;font-weight:500;color:var(--navy-mid);
+  transition:background .18s,border-color .18s;
+}
+.side button:hover{background:var(--silver-bg);}
+.side button .tick{
+  width:16px;flex:0 0 16px;color:var(--green-dk);
+  font-family:var(--mont);font-size:12px;font-weight:800;
+}
+.side button .chev{margin-left:auto;color:var(--silver);font-size:14px;}
+.side li[aria-current="true"] button{
+  color:var(--navy);font-weight:700;font-family:var(--mont);font-size:12.5px;
+  letter-spacing:-0.1px;background:var(--silver-bg);border-left-color:var(--green);
+}
+.side button:focus-visible{outline:2px solid var(--navy-mid);outline-offset:-2px;}
+
+/* ============ MAIN ============ */
+.main{flex:1 1 auto;min-width:0;}
+.card{
+  background:#fff;border-radius:10px;border-top:3px solid var(--navy);
+  box-shadow:0 1px 5px rgba(0,51,89,0.07);
+  margin:0 0 20px;overflow:hidden;
+  animation:fadeUp .5s ease both;
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:0 2px 10px rgba(0,51,89,0.06);}
+.card-head{
+  background:var(--navy);padding:13px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+.card-head h2{
+  margin:0;font-family:var(--mont);font-size:14px;font-weight:600;
+  letter-spacing:-0.1px;color:#fff;
+}
+.card-head .step-tag{
+  font-family:var(--mont);font-size:9px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;color:var(--green);
+}
+.card-body{padding:26px;}
+
+.instructions{
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  color:var(--ink-soft);margin:0 0 18px;max-width:900px;
+}
+.instructions strong{font-weight:600;color:var(--navy);}
+.reqkey{
+  font-family:var(--mont);font-size:9px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--silver);margin:0 0 4px;
+}
+.star{color:var(--navy-mid);font-weight:800;}
+.divider{
+  height:1px;border:none;margin:20px 0;
+  background:linear-gradient(90deg,transparent,var(--silver-lt2),transparent);
+}
+
+/* ============ FORM ============ */
+.fieldrow{margin:0 0 18px;max-width:640px;}
+label.fl{
+  display:block;font-family:var(--mont);font-size:9.5px;font-weight:600;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--navy-mid);margin:0 0 6px;
+}
+input[type=text],input[type=email],select,textarea{
+  width:100%;font-family:var(--sans);font-size:14px;font-weight:400;
+  padding:9px 12px;color:var(--ink);background:#fff;
+  border:1px solid #dfe3e6;border-radius:5px;
+  transition:border-color .18s,box-shadow .18s;
+}
+select{font-family:var(--sans);cursor:pointer;}
+textarea{resize:vertical;line-height:1.6;}
+input::placeholder,textarea::placeholder{color:var(--silver);font-weight:300;}
+input:hover,select:hover,textarea:hover{border-color:var(--silver);}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--navy-mid);
+  box-shadow:0 0 0 2px rgba(10,74,117,0.10);
+}
+.hint{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink-soft);margin:5px 0 0;
+}
+.cols{display:flex;gap:16px;flex-wrap:wrap;max-width:760px;}
+.cols > .fieldrow{flex:1 1 200px;}
+.cols.tight > .fieldrow.mid{flex:0 0 110px;}
+
+/* ============ ALERT BOXES ============ */
+.flag{
+  background:var(--silver-bg);border-left:3px solid var(--silver);
+  border-radius:0 6px 6px 0;padding:11px 15px;
+  font-family:var(--sans);font-size:13px;color:var(--ink);
+  margin:0 0 18px;max-width:900px;
+}
+.flag strong{font-weight:600;color:var(--navy);}
+.flag.ok{background:var(--green-bg);border-left-color:var(--green-dk);}
+.flag.err{background:var(--silver-bg);border-left-color:var(--navy-mid);}
+.flag .boxhead{
+  display:block;font-family:var(--mont);font-size:9px;font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--navy-mid);margin:0 0 5px;
+}
+.flag.ok .boxhead{color:var(--green-dk);}
+
+/* ============ CATEGORY RADIO LIST ============ */
+.radiolist{margin:0 0 6px;max-width:820px;}
+.radiolist label{
+  display:block;padding:12px 15px;margin:0 0 7px;cursor:pointer;
+  background:#fff;border:1px solid #e3e6e8;border-radius:6px;
+  border-left:2px solid #e3e6e8;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  transition:background .18s,border-color .18s;
+}
+.radiolist label:hover{border-color:var(--silver);border-left-color:var(--navy-mid);}
+.radiolist label:has(input:checked){
+  background:var(--green-bg);border-color:var(--green-pale);border-left-color:var(--green-dk);
+}
+.radiolist input{width:auto;margin-right:10px;accent-color:var(--navy);}
+.radiolist .name{font-family:var(--mont);font-weight:600;font-size:13.5px;color:var(--navy);}
+.radiolist .sub{
+  display:block;margin-left:26px;font-size:12.5px;font-weight:300;color:var(--ink-soft);
+}
+.radiolist .noncomp{
+  display:inline-block;font-family:var(--mont);font-size:9px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;color:var(--silver);background:transparent;
+  border:1px solid var(--silver-lt2);
+  padding:2px 7px;border-radius:3px;margin-left:6px;font-style:normal;
+}
+
+/* ============ TABLES ============ */
+table.grid{width:100%;border-collapse:collapse;}
+table.grid thead th{
+  background:var(--navy);color:#fff;
+  font-family:var(--mont);font-size:9px;font-weight:600;
+  letter-spacing:1.1px;text-transform:uppercase;text-align:left;
+  padding:10px;white-space:nowrap;
+}
+table.grid thead th:first-child{border-radius:6px 0 0 0;}
+table.grid thead th:last-child{border-radius:0 6px 0 0;}
+table.grid td{
+  padding:10px;border-bottom:1px solid var(--silver-bg);vertical-align:middle;
+}
+table.grid tbody tr{transition:background .18s;}
+table.grid tbody tr:hover{background:var(--silver-bg);}
+td select,td input[type=text]{font-size:13px;padding:6px 8px;}
+.w-order{width:70px;}
+.w-actions{width:110px;}
+.w-mid{width:64px;}
+.w-role{width:160px;}
+.w-attend{width:76px;text-align:center;}
+.rolecell select.mentor-role{
+  border-color:var(--green-dk);
+  box-shadow:0 0 0 2px rgba(56,176,36,0.14);
+}
+input[type=checkbox],input[type=radio]{accent-color:var(--navy);}
+
+/* ============ BUTTONS ============ */
+.btnbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 0;}
+.btn{
+  font-family:var(--mont);font-size:9.5px;font-weight:600;
+  letter-spacing:1.1px;text-transform:uppercase;
+  padding:9px 16px;border-radius:5px;cursor:pointer;
+  border:1px solid #dfe3e6;background:#fff;color:var(--navy);
+  transition:background .18s,border-color .18s,box-shadow .18s,transform .18s;
+}
+.btn:hover{background:var(--silver-bg);border-color:var(--silver);}
+.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:2px solid var(--navy-mid);outline-offset:2px;}
+.btn.primary{
+  background:var(--green);border-color:var(--green);color:var(--navy-dk);font-weight:800;
+}
+.btn.primary:hover{background:var(--green-dk);border-color:var(--green-dk);color:#fff;}
+.btn.navy{background:var(--navy);border-color:var(--navy);color:#fff;}
+.btn.navy:hover{background:var(--navy-mid);border-color:var(--navy-mid);}
+.btn[disabled]{opacity:.4;cursor:not-allowed;}
+.btn[disabled]:hover{background:#fff;border-color:var(--silver-lt2);}
+.btn .ico{margin-right:6px;}
+
+.footbar{
+  background:#fff;border-radius:8px;border:1px solid #e3e6e8;
+  box-shadow:0 1px 2px rgba(0,51,89,0.04);
+  padding:15px 24px;margin-top:4px;
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;
+}
+.notice{
+  font-family:var(--sans);font-size:13px;font-weight:600;color:var(--green-dk);
+  min-height:18px;margin:12px 0 0;
+}
+
+.panel{display:none;}
+.panel.on{display:block;}
+
+/* ============ COUNTERS ============ */
+.wc{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font-family:var(--sans);font-size:12px;font-weight:300;color:var(--ink-soft);
+  max-width:900px;margin-top:8px;
+}
+.wc .num{font-family:var(--mont);font-weight:700;font-size:12px;color:var(--navy);}
+.wc.over .num{color:var(--navy-mid);}
+.wc.over{font-weight:600;color:var(--navy-mid);}
+.meter{
+  height:6px;background:var(--silver-bg);border-radius:3px;
+  max-width:900px;margin-top:6px;overflow:hidden;
+}
+.meter i{
+  display:block;height:100%;width:0;background:var(--green-dk);
+  border-radius:3px;transition:width .25s ease,background .25s;
+}
+.meter.warn i{background:var(--navy-mid);}
+.meter.over i{background:var(--navy);}
+
+/* ============ REVIEW ============ */
+.rev{
+  display:flex;gap:20px;padding:13px 0;margin:0;
+  border-bottom:1px solid var(--silver-bg);
+}
+.rev dt{
+  flex:0 0 220px;font-family:var(--mont);font-size:10px;font-weight:700;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--navy);padding-top:2px;
+}
+.rev dd{
+  margin:0;flex:1 1 auto;font-family:var(--sans);font-size:14px;
+  white-space:pre-wrap;color:var(--ink);
+}
+.blank{color:var(--silver);font-weight:300;font-style:italic;}
+
+.routing{
+  background:var(--navy-dk);border-radius:10px;padding:20px 24px;
+  max-width:900px;margin:0 0 18px;
+}
+.routing h3{
+  margin:0 0 12px;font-family:var(--mont);font-size:11px;font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--green);
+}
+.routing p{
+  margin:0 0 10px;font-family:var(--sans);font-size:13px;font-weight:300;
+  color:var(--silver-lt);
+}
+.routing p:last-child{margin:0;}
+.routing strong{color:#fff;font-weight:600;}
+
+.byline-box{
+  background:var(--silver-bg);border-radius:8px;padding:16px 18px;
+  max-width:900px;font-family:var(--sans);font-size:15px;color:var(--ink);
+}
+.byline-box .pstar{color:var(--green-dk);font-weight:700;}
+
+/* ============ CONFIRMATION ============ */
+.confirm-wrap{max-width:1320px;margin:0 auto;padding:26px 26px 90px;}
+.confirm-cols{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap;}
+.confirm-side{flex:0 0 320px;}
+.confirm-main{flex:1 1 560px;min-width:0;}
+
+.verdict{
+  background:var(--silver-bg);border-radius:10px;padding:22px 28px;margin:0 0 20px;
+}
+.verdict .vlabel{
+  font-family:var(--mont);font-size:10px;font-weight:700;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--navy-mid);margin:0 0 4px;
+}
+.verdict .vid{
+  font-family:var(--mont);font-size:30px;font-weight:800;color:var(--navy);
+  letter-spacing:-0.5px;line-height:1.1;margin:0 0 6px;
+}
+.verdict .vdesc{
+  font-family:var(--sans);font-size:14px;font-weight:600;color:var(--navy-dk);margin:0;
+}
+
+.statusbox{
+  background:#fff;border-radius:8px;border:1px solid #e3e6e8;border-top:2px solid var(--navy);
+  box-shadow:0 1px 2px rgba(0,51,89,0.04);
+  padding:19px 21px;margin:0 0 16px;
+  animation:fadeUp .5s ease both;
+}
+.statusbox h3{
+  margin:0 0 12px;font-family:var(--mont);font-size:11px;font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--navy);
+}
+.statusbox p{margin:0 0 9px;font-family:var(--sans);font-size:13px;color:var(--ink-soft);}
+.statusbox p:last-child{margin:0;}
+.statusbox strong{color:var(--navy);font-weight:600;}
+.pill{
+  display:inline-block;font-family:var(--mont);font-size:9px;font-weight:800;
+  letter-spacing:1.4px;text-transform:uppercase;padding:5px 11px;border-radius:4px;
+  background:var(--navy-mid);color:#fff;
+}
+.pill.ok{background:var(--green);color:var(--navy-dk);}
+
+.strengths{background:var(--navy-dk);border-radius:10px;padding:20px 24px;margin:0 0 18px;}
+.strengths h3{
+  margin:0 0 12px;font-family:var(--mont);font-size:11px;font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--green);
+}
+.strengths ul{margin:0;padding-left:18px;}
+.strengths li{
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  color:var(--silver-lt);margin:0 0 7px;
+}
+.strengths li strong{color:#fff;font-weight:600;}
+
+/* proof sheet keeps journal serif for authenticity */
+.proof{
+  background:#fff;border-radius:8px;border:1px solid #e3e6e8;border-top:2px solid var(--navy);
+  box-shadow:0 1px 2px rgba(0,51,89,0.04);
+  padding:38px 42px;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:13.5px;line-height:1.55;color:#1a1a1a;
+}
+.proof .runhead{
+  font-family:var(--sans);font-size:11px;font-weight:400;color:var(--silver);
+  border-bottom:1px solid var(--silver-bg);padding-bottom:8px;margin-bottom:22px;
+}
+.proof h2{font-size:16px;margin:0 0 8px;font-weight:bold;line-height:1.35;color:#1a1a1a;}
+.proof .authors{font-size:13px;margin:0 0 16px;}
+.proof .presnote{font-family:var(--sans);font-size:11px;color:var(--ink-soft);}
+.proof p.sec{margin:0 0 11px;text-align:justify;}
+.proof p.sec b{font-weight:bold;}
+.proof .doi{
+  font-family:var(--sans);font-size:11px;color:var(--silver);
+  margin:20px 0 0;font-style:italic;
+}
+
+/* ============ FOOTER ============ */
+.pagefoot{
+  position:relative;max-width:1320px;margin:0 auto;padding:26px;
+  font-family:var(--sans);font-size:12px;color:var(--silver);text-align:center;
+}
+.pagefoot::before{
+  content:"";position:absolute;top:0;left:26px;right:26px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--silver-lt2),transparent);
+}
+
+@media (max-width:900px){
+  .shell{flex-direction:column;gap:18px;}
+  .side{width:100%;flex:1 1 auto;}
+}
+@media (max-width:640px){
+  .hero{padding:24px 18px 26px;}
+  .shell{padding:18px 16px 60px;}
+  .card-body{padding:20px 18px;}
+  .confirm-wrap{padding:18px 16px 60px;}
+  .proof{padding:24px 20px;}
+  .rev{flex-direction:column;gap:4px;}
+  .rev dt{flex:1 1 auto;}
+}
+@media print{
+  body{background:#fff;}
+  .noprint{display:none !important;}
+  .proof{border:none;box-shadow:none;padding:0;border-radius:0;}
+  .card,.statusbox,.side{box-shadow:none;break-inside:avoid;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;}
+}
+
+/* ============ EDITOR CARD ============ */
+.ed-scrim{
+  position:fixed;inset:0;background:rgba(0,34,64,0.45);
+  opacity:0;pointer-events:none;transition:opacity .2s;z-index:80;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:40px 20px;overflow-y:auto;
+}
+.ed-scrim.open{opacity:1;pointer-events:auto;}
+.ed-card{
+  position:relative;width:min(620px,100%);margin:auto;
+  max-height:calc(100vh - 80px);
+  background:#fff;z-index:90;display:flex;flex-direction:column;
+  border-radius:10px;overflow:hidden;
+  opacity:0;transform:translateY(-12px) scale(.985);
+  transition:opacity .2s ease, transform .2s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 18px 48px rgba(0,34,64,0.26);
+  pointer-events:none;
+}
+.ed-card.open{opacity:1;transform:none;pointer-events:auto;}
+.ed-head{
+  background:linear-gradient(135deg,#002240 0%,#003359 70%,#0a4a75 100%);
+  padding:22px 26px 20px;position:relative;flex:0 0 auto;
+}
+.ed-head h3{
+  margin:0;font-family:var(--mont);font-size:17px;font-weight:700;
+  letter-spacing:-0.3px;color:#fff;padding-right:34px;
+}
+.ed-head .ed-sub{
+  margin:4px 0 0;font-family:var(--mont);font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--green);
+}
+.ed-close{
+  position:absolute;top:20px;right:20px;
+  background:none;border:none;color:var(--silver-lt);cursor:pointer;
+  font-size:24px;line-height:1;padding:2px 6px;border-radius:4px;
+}
+.ed-close:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.ed-close:focus-visible{outline:2px solid var(--green);outline-offset:2px;}
+.ed-body{flex:1 1 auto;overflow-y:auto;padding:24px 28px;}
+.ed-body .fieldrow{max-width:none;margin-bottom:16px;}
+.ed-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;}
+.ed-grid .span2{grid-column:1 / -1;}
+.ed-foot{
+  flex:0 0 auto;border-top:1px solid var(--silver-bg);padding:16px 26px;
+  display:flex;gap:10px;justify-content:flex-end;background:var(--silver-bg);
+}
+.ed-sect{
+  font-family:var(--mont);font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--green-dk);margin:22px 0 12px;
+  display:flex;align-items:center;gap:8px;
+}
+.ed-sect::before{content:"";width:16px;height:2px;background:var(--green);flex:0 0 16px;}
+.ed-sect:first-child{margin-top:0;}
+.togglerow{
+  display:flex;align-items:flex-start;gap:11px;padding:12px 14px;
+  background:#fff;border:1px solid #e3e6e8;border-radius:6px;margin:0 0 9px;cursor:pointer;
+  border-left:2px solid #e3e6e8;transition:background .16s,border-color .16s;
+}
+.togglerow:hover{border-color:var(--silver);border-left-color:var(--navy-mid);}
+.togglerow:has(input:checked){background:var(--green-bg);border-color:var(--green-pale);border-left-color:var(--green-dk);}
+.togglerow input{width:auto;margin:2px 0 0;flex:0 0 auto;}
+.togglerow .tl{
+  font-family:var(--mont);font-size:12px;font-weight:600;color:var(--navy);
+  display:block;margin:0 0 2px;
+}
+.togglerow .td{
+  font-family:var(--sans);font-size:12px;font-weight:300;color:var(--ink-soft);
+  display:block;
+}
+#ed-err{margin:0 0 16px;display:none;}
+
+@media (max-width:640px){
+  .ed-scrim{padding:0;align-items:stretch;}
+  .ed-card{width:100%;max-height:100vh;border-radius:0;margin:0;}
+  .ed-grid{grid-template-columns:1fr;gap:0;}
+  .au-inst{display:none;}
+  .au-flags{max-width:110px;}
+  .au-act{width:auto;}
+  .rowbtn.up,.rowbtn.down{display:none;}
+}
+
+/* ============ AUTHOR CARDS ============ */
+.au-list{display:flex;flex-direction:column;gap:8px;margin:0 0 4px;}
+
+.au-empty{
+  padding:34px 20px;text-align:center;border-radius:8px;
+  border:1px dashed var(--silver-lt2);background:transparent;
+  font-family:var(--sans);font-size:13.5px;font-weight:300;color:var(--ink-soft);
+}
+.au-empty strong{font-weight:600;color:var(--navy);}
+
+.au-card{
+  display:grid;
+  grid-template-columns:26px 1fr auto;
+  align-items:center;
+  gap:16px;
+  padding:14px 16px;
+  background:#fff;
+  border:1px solid var(--silver-lt2);
+  border-left:2px solid var(--silver-lt2);
+  border-radius:8px;
+  cursor:pointer;
+  transition:border-color .16s, box-shadow .16s;
+}
+.au-card:hover{
+  border-color:var(--silver);
+  border-left-color:var(--navy-mid);
+  box-shadow:0 2px 8px rgba(0,51,89,0.06);
+}
+.au-card:focus-visible{outline:2px solid var(--navy-mid);outline-offset:2px;}
+.au-card.is-first{border-left-color:var(--navy);}
+.au-card.is-mentor{border-left-color:var(--green-dk);}
+.au-card.is-incomplete{border-left-color:var(--silver);background:#fcfcfc;}
+
+.au-pos{
+  font-family:var(--mont);font-size:11px;font-weight:700;
+  color:var(--silver);text-align:center;
+}
+
+.au-main{min-width:0;}
+.au-line1{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:0 0 3px;}
+.au-name{
+  font-family:var(--mont);font-size:14px;font-weight:600;
+  letter-spacing:-0.1px;color:var(--navy);
+}
+.au-name .blank{font-weight:400;}
+.au-deg{font-family:var(--sans);font-size:12px;font-weight:300;color:var(--ink-soft);}
+.au-line2{
+  display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  font-family:var(--sans);font-size:12.5px;font-weight:300;color:var(--ink-soft);
+}
+.au-line2 .sep{color:var(--silver-lt2);}
+.au-line2 .mail{color:var(--silver);}
+
+/* role appears as quiet text, not a filled chip */
+.rolelabel{
+  font-family:var(--mont);font-size:9px;font-weight:700;
+  letter-spacing:1.3px;text-transform:uppercase;
+}
+.rolelabel.first{color:var(--navy);}
+.rolelabel.mentor{color:var(--green-dk);}
+.rolelabel.co{color:var(--silver);}
+.rolelabel.none{color:var(--silver);font-style:italic;letter-spacing:.8px;}
+
+/* status: outline chips, not solid blocks */
+.au-tags{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.tag{
+  font-family:var(--mont);font-size:8.5px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;white-space:nowrap;
+  border:1px solid var(--silver-lt2);color:var(--silver);background:transparent;
+}
+.tag.pres{border-color:var(--green-dk);color:var(--green-dk);background:var(--green-bg);}
+.tag.off{border-style:dashed;}
+.tag.warn{border-color:var(--navy-mid);color:var(--navy-mid);}
+
+.au-act{display:flex;gap:4px;align-items:center;}
+.rowbtn{
+  border:1px solid transparent;background:transparent;color:var(--silver);
+  border-radius:5px;cursor:pointer;width:26px;height:26px;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;line-height:1;
+  transition:background .14s,color .14s,border-color .14s;
+}
+.rowbtn:hover{background:var(--silver-bg);color:var(--navy);border-color:var(--silver-lt2);}
+.rowbtn:focus-visible{outline:2px solid var(--navy-mid);outline-offset:1px;}
+.rowbtn:disabled{opacity:.25;cursor:not-allowed;}
+.rowbtn:disabled:hover{background:transparent;color:var(--silver);border-color:transparent;}
+.rowbtn.del:hover{background:var(--navy-dk);color:#fff;border-color:var(--navy-dk);}
+
+/* presenter requirement banner */
+.pres-req{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 15px;margin:12px 0 0;border-radius:8px;
+  background:var(--silver-bg);border-left:3px solid var(--navy-mid);
+  font-family:var(--sans);font-size:13px;color:var(--ink);
+}
+.pres-req.ok{background:var(--green-bg);border-left-color:var(--green-dk);}
+.pres-req .lbl{
+  font-family:var(--mont);font-size:9px;font-weight:700;letter-spacing:1.3px;
+  text-transform:uppercase;color:var(--navy-mid);flex:0 0 auto;
+}
+.pres-req.ok .lbl{color:var(--green-dk);}
+
+@media (max-width:640px){
+  .au-card{grid-template-columns:20px 1fr;gap:10px;padding:12px 13px;}
+  .au-act{grid-column:1 / -1;justify-content:flex-end;
+    border-top:1px solid var(--silver-bg);padding-top:9px;margin-top:2px;}
+}
+</style>
+
+</head>
+<body>
+
+
+<!-- ============================ FORM ============================ -->
+<div id="form-view">
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">SeDR &middot; AADOCR</span>
+    <h1>Symposium Abstract Submission</h1>
+    <p>Submit your abstract for review, scoring, and optional publication in <em>Dentistry Review</em>.</p>
+  </div>
+  <div class="hero-stripe"></div>
+</header>
+
+<div class="shell">
+
+  <nav class="side" aria-label="Submission steps">
+    <div class="side-head">
+      <h2>Submission</h2>
+      <span class="count">7 Steps</span>
+    </div>
+    <ul id="steplist">
+      <li aria-current="true"><button type="button" data-step="0"><span class="tick"></span><span>1. Submitter Information</span><span class="chev">&rsaquo;</span></button></li>
+      <li><button type="button" data-step="1"><span class="tick"></span><span>2. Authors &amp; Roles</span><span class="chev">&rsaquo;</span></button></li>
+      <li><button type="button" data-step="2"><span class="tick"></span><span>3. Research Category</span><span class="chev">&rsaquo;</span></button></li>
+      <li><button type="button" data-step="3"><span class="tick"></span><span>4. Title &amp; Abstract</span><span class="chev">&rsaquo;</span></button></li>
+      <li><button type="button" data-step="4"><span class="tick"></span><span>5. Publication &amp; Competition</span><span class="chev">&rsaquo;</span></button></li>
+      <li><button type="button" data-step="5"><span class="tick"></span><span>6. Review &amp; Submit</span><span class="chev">&rsaquo;</span></button></li>
+    </ul>
+  </nav>
+
+  <main class="main">
+
+    <!-- STEP 1 -->
+    <section class="panel on" data-panel="0">
+      <div class="card">
+        <div class="card-head">
+          <h2>Submitter Information</h2>
+          <span class="step-tag">Step 1 of 6</span>
+        </div>
+        <div class="card-body">
+          <p class="kicker">Contact &amp; Affiliation</p>
+          <p class="instructions">Enter the details of the person submitting this abstract. All correspondence about this submission, including the acceptance notice and poster number assignment, is sent to the address below. The submitter is usually also an author, entered in Step 2.</p>
+          <p class="reqkey"><span class="star">*</span> Required Fields</p>
+          <hr class="divider">
+
+          <div class="cols tight">
+            <div class="fieldrow">
+              <label class="fl" for="f-first"><span class="star">*</span> First Name</label>
+              <input type="text" id="f-first" data-key="Submitter First Name">
+            </div>
+            <div class="fieldrow mid">
+              <label class="fl" for="f-mid">Middle</label>
+              <input type="text" id="f-mid" data-key="Submitter Middle">
+            </div>
+            <div class="fieldrow">
+              <label class="fl" for="f-last"><span class="star">*</span> Last Name</label>
+              <input type="text" id="f-last" data-key="Submitter Last Name">
+            </div>
+          </div>
+          <p class="hint" style="margin:-10px 0 18px">Middle name or initial. Enter it as it should appear in print.</p>
+
+          <div class="fieldrow">
+            <label class="fl" for="f-email"><span class="star">*</span> E-Mail Address</label>
+            <input type="email" id="f-email" data-key="Submitter E-Mail">
+          </div>
+          <div class="fieldrow">
+            <label class="fl" for="f-inst"><span class="star">*</span> Institution</label>
+            <select id="f-inst" data-key="Institution">
+              <option value="Dental College of Georgia at Augusta University" selected>Dental College of Georgia at Augusta University</option>
+              <option value="Augusta University">Augusta University</option>
+              <option value="Medical College of Georgia at Augusta University">Medical College of Georgia at Augusta University</option>
+              <option value="College of Allied Health Sciences at Augusta University">College of Allied Health Sciences at Augusta University</option>
+              <option value="University of Georgia">University of Georgia</option>
+              <option value="Georgia Institute of Technology">Georgia Institute of Technology</option>
+              <option value="Emory University">Emory University</option>
+              <option value="Medical University of South Carolina">Medical University of South Carolina</option>
+              <option value="University of Alabama at Birmingham">University of Alabama at Birmingham</option>
+              <option value="University of Florida">University of Florida</option>
+              <option value="University of North Carolina at Chapel Hill">University of North Carolina at Chapel Hill</option>
+              <option value="Virginia Commonwealth University">Virginia Commonwealth University</option>
+              <option value="__other__">Other (enter below)</option>
+            </select>
+            <p class="hint">Your name, institution, and e-mail are carried into the first author entry in Step 2.</p>
+          </div>
+          <div class="fieldrow" id="f-inst-other-wrap" style="display:none">
+            <label class="fl" for="f-inst-other"><span class="star">*</span> Institution Name</label>
+            <input type="text" id="f-inst-other" data-key="Institution (Other)" placeholder="Enter your institution">
+          </div>
+          <div class="fieldrow">
+            <label class="fl" for="f-level"><span class="star">*</span> Education / Level Affiliation</label>
+            <select id="f-level" data-key="Education Level">
+              <option value="">Select:</option>
+              <option>Predoctoral Dental Student (D1)</option>
+              <option>Predoctoral Dental Student (D2)</option>
+              <option>Predoctoral Dental Student (D3)</option>
+              <option>Predoctoral Dental Student (D4)</option>
+              <option>Dental Hygiene Student</option>
+              <option>Undergraduate Student</option>
+              <option>Graduate Student (MS)</option>
+              <option>Graduate Student (PhD)</option>
+              <option>Dental Resident</option>
+              <option>Postdoctoral Fellow</option>
+              <option value="Faculty">Faculty</option>
+              <option>Staff / Research Scientist</option>
+              <option>Other</option>
+            </select>
+            <p class="hint">Every submitter except Faculty must list a mentor in Step 2.</p>
+          </div>
+
+          <hr class="divider">
+          <p class="kicker">Presentation</p>
+          <div class="fieldrow">
+            <label class="fl" for="f-presenting"><span class="star">*</span> Will you be presenting this abstract?</label>
+            <select id="f-presenting" data-key="Submitter Presenting">
+              <option value="">Select:</option>
+              <option value="yes">Yes, I am the presenting author</option>
+              <option value="no">No, another author will present</option>
+            </select>
+            <p class="hint">The presenting author is marked with an asterisk in the published byline and must attend the event.</p>
+          </div>
+          <p class="flag" id="presenting-note" style="display:none">
+            <span class="boxhead">Presenter</span>
+            <span id="presenting-note-txt"></span>
+          </p>
+
+          <p class="flag err" id="mentor-required-note" style="display:none">
+            <span class="boxhead">Mentor Required</span>
+            Based on your level, a <strong>Mentor (Last Author)</strong> is required in Step 2. The abstract cannot be submitted without one.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="panel" data-panel="1">
+      <div class="card">
+        <div class="card-head">
+          <h2>Authors &amp; Roles</h2>
+          <span class="step-tag">Step 2 of 6</span>
+        </div>
+        <div class="card-body">
+          <p class="kicker">Byline &amp; Presentation</p>
+          <p class="instructions">Authors appear in print in the order listed below. Click any author to edit their details. <strong>One author must be designated as the presenter</strong>, and only attending authors receive name tags.</p>
+          <hr class="divider">
+
+          <div class="au-list" id="au-rows"></div>
+
+          <div class="pres-req" id="pres-req">
+            <span class="lbl">Presenter</span>
+            <span id="pres-req-txt">No presenter designated.</span>
+          </div>
+
+          <div class="btnbar">
+            <button type="button" class="btn primary" id="au-add"><span class="ico">+</span>Add Author</button>
+            <button type="button" class="btn" id="au-copy">Copy Submitter</button>
+            <button type="button" class="btn" id="au-check">Validate List</button>
+          </div>
+
+          <div id="au-msgs" style="margin-top:20px"></div>
+
+          <hr class="divider">
+          <p class="kicker">Author Line Preview</p>
+          <p class="hint" style="margin:0 0 10px">This is how the byline will appear in <em>Dentistry Review</em>, if applicable.</p>
+          <div class="byline-box" id="byline-preview"><span class="blank">No authors entered</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="panel" data-panel="2">
+      <div class="card">
+        <div class="card-head">
+          <h2>Research Category</h2>
+          <span class="step-tag">Step 3 of 6</span>
+        </div>
+        <div class="card-body">
+          <p class="kicker">Review Group Assignment</p>
+          <p class="instructions">Select the single category that best describes this work. Category determines which review group scores the abstract and whether it is eligible for the competition.</p>
+          <p class="reqkey"><span class="star">*</span> Required Fields</p>
+          <hr class="divider">
+
+          <div class="radiolist" id="cat-list">
+            <label><input type="radio" name="cat" value="Basic Sciences" data-comp="1"><span class="name">Basic Sciences</span>
+              <span class="sub">Proteins, cells, animals, biologicals</span></label>
+            <label><input type="radio" name="cat" value="Clinical Materials" data-comp="1"><span class="name">Clinical Materials</span>
+              <span class="sub">Bench top, dental materials</span></label>
+            <label><input type="radio" name="cat" value="Clinical Treatment" data-comp="1"><span class="name">Clinical Treatment</span>
+              <span class="sub">Techniques, patient studies, case studies</span></label>
+            <label><input type="radio" name="cat" value="Educational or Behavioral" data-comp="1"><span class="name">Educational or Behavioral</span>
+              <span class="sub">Surveys, education research</span></label>
+            <label><input type="radio" name="cat" value="Literature Review" data-comp="0"><span class="name">Literature Review</span><span class="noncomp">Not Competition Eligible</span>
+              <span class="sub">Systematic and narrative reviews</span></label>
+            <label><input type="radio" name="cat" value="Project in Development" data-comp="0"><span class="name">Project in Development</span><span class="noncomp">Not Competition Eligible</span>
+              <span class="sub">Preliminary work, no data yet, research proposal</span></label>
+            <label><input type="radio" name="cat" value="Other" data-comp="1"><span class="name">Other</span>
+              <span class="sub">Specify below</span></label>
+          </div>
+
+          <div class="fieldrow" id="other-wrap" style="display:none;margin-top:18px">
+            <label class="fl" for="f-other"><span class="star">*</span> Please Specify</label>
+            <input type="text" id="f-other" data-key="Other Category">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="panel" data-panel="3">
+      <div class="card">
+        <div class="card-head">
+          <h2>Title &amp; Abstract</h2>
+          <span class="step-tag">Step 4 of 6</span>
+        </div>
+        <div class="card-body">
+          <p class="kicker">Structured Content</p>
+          <p class="instructions">Enter your title and structured abstract. Each section is entered separately and reassembled in the published format. <strong>Do not upload a signed PDF form.</strong> Text entered here is captured directly and reused for the program book and, if applicable, for publication in <em>Dentistry Review</em>.</p>
+          <p class="reqkey"><span class="star">*</span> Required Fields</p>
+          <hr class="divider">
+
+          <div class="fieldrow" style="max-width:900px">
+            <label class="fl" for="f-title"><span class="star">*</span> Abstract Title</label>
+            <input type="text" id="f-title" data-key="Abstract Title">
+            <div class="wc" id="wc-title">
+              <span>Sentence case, no closing period, no abbreviations unless widely understood</span>
+              <span><span class="num" id="tc-n">0</span> / <span class="num" id="tc-max">20</span> words</span>
+            </div>
+            <div class="meter" id="tm"><i id="tm-fill"></i></div>
+          </div>
+
+          <hr class="divider">
+          <p class="kicker">Structured Abstract</p>
+          <p class="hint" style="margin:0 0 20px">Combined 300-word limit across Objectives, Methods, Results, and Conclusions. Implications is optional and counted separately.</p>
+
+          <div class="fieldrow" style="max-width:900px">
+            <label class="fl" for="f-obj"><span class="star">*</span> Objectives</label>
+            <textarea id="f-obj" rows="3" data-key="Objectives" data-count></textarea>
+          </div>
+          <div class="fieldrow" style="max-width:900px">
+            <label class="fl" for="f-met"><span class="star">*</span> Materials and Methods</label>
+            <textarea id="f-met" rows="7" data-key="Methods" data-count></textarea>
+          </div>
+          <div class="fieldrow" style="max-width:900px">
+            <label class="fl" for="f-res"><span class="star">*</span> Results</label>
+            <textarea id="f-res" rows="5" data-key="Results" data-count></textarea>
+          </div>
+          <div class="fieldrow" style="max-width:900px">
+            <label class="fl" for="f-con"><span class="star">*</span> Conclusions</label>
+            <textarea id="f-con" rows="4" data-key="Conclusions" data-count></textarea>
+          </div>
+
+          <div class="wc" id="wc">
+            <span>Combined word count, four required sections</span>
+            <span><span class="num" id="wc-n">0</span> / <span class="num" id="wc-max">300</span> words</span>
+          </div>
+          <div class="meter" id="bm"><i id="bm-fill"></i></div>
+
+          <div class="fieldrow" style="max-width:900px;margin-top:26px">
+            <label class="fl" for="f-imp">Implications</label>
+            <textarea id="f-imp" rows="4" data-key="Implications"></textarea>
+            <p class="hint">Clinical relevance for practicing clinicians. Published abstracts in <em>Dentistry Review</em> include this section. Not counted toward the limit above.</p>
+          </div>
+
+          <div class="fieldrow" style="max-width:900px">
+            <label class="fl" for="f-fund">Funding Source</label>
+            <input type="text" id="f-fund" data-key="Funding Source">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="panel" data-panel="4">
+      <div class="card">
+        <div class="card-head">
+          <h2>Publication &amp; Competition</h2>
+          <span class="step-tag">Step 5 of 6</span>
+        </div>
+        <div class="card-body">
+          <p class="kicker">Prior Work &amp; Eligibility</p>
+          <p class="instructions">Indicate whether this work has been published before and whether you are entering the competition. Publication consent is confirmed separately by the mentor listed in Step 2.</p>
+          <p class="reqkey"><span class="star">*</span> Required Fields</p>
+          <hr class="divider">
+
+          <div class="fieldrow">
+            <label class="fl" for="f-pub"><span class="star">*</span> Previously Published?</label>
+            <select id="f-pub" data-key="Previously Published">
+              <option value="">Select:</option>
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div class="fieldrow" id="pub-wrap" style="display:none">
+            <label class="fl" for="f-pubwhere">Where Was It Published?</label>
+            <input type="text" id="f-pubwhere" data-key="Prior Publication">
+            <p class="hint">Journal, meeting, or repository, with year.</p>
+          </div>
+
+          <hr class="divider">
+          <p class="kicker">Competition</p>
+          <div class="fieldrow">
+            <label class="fl" for="f-comp"><span class="star">*</span> Entering the Competition?</label>
+            <select id="f-comp" data-key="Competing">
+              <option value="">Select:</option>
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+            <p class="hint"><a href="#" onclick="return false">Competition rules and eligibility &rsaquo;</a></p>
+          </div>
+          <p class="flag err" id="comp-warn" style="display:none">
+            <span class="boxhead">Not Eligible</span>
+            The category selected in Step 3 is not eligible for the competition. Change the category or set this to No before submitting.
+          </p>
+
+          <hr class="divider">
+          <p class="kicker">Mentor Approval &amp; Publication Consent</p>
+          <div class="routing" id="routing-box">
+            <h3>What Happens When You Submit</h3>
+            <p id="routing-line">No mentor has been listed in Step 2.</p>
+            <p>The mentor is asked to confirm that the abstract is accurate and approved for presentation, and to indicate whether it may be published in the AU Repository, in <em>Dentistry Review</em>, in both, or in neither.</p>
+            <p>The submission is not final until the mentor responds. You will receive a copy of their decision.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="panel" data-panel="5">
+      <div class="card">
+        <div class="card-head">
+          <h2>Review &amp; Submit</h2>
+          <span class="step-tag">Step 6 of 6</span>
+        </div>
+        <div class="card-body">
+          <p class="kicker">Final Check</p>
+          <p class="instructions">Review every field below. Use the step list on the left to return to any section and make corrections. Your abstract is not received by the committee until you click Submit.</p>
+          <hr class="divider">
+          <div id="blockers"></div>
+          <div id="review"></div>
+          <p class="notice" id="notice"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footbar">
+      <button type="button" class="btn" id="prev"><span class="ico">&lsaquo;</span>Previous</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button type="button" class="btn primary" id="next">Save and Continue <span class="ico" style="margin:0 0 0 6px">&rsaquo;</span></button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="pagefoot">Southeastern Division for Dental Research &middot; Augusta University</div>
+</div>
+
+
+<!-- ==================== AUTHOR EDITOR CARD ==================== -->
+<div class="ed-scrim" id="ed-scrim">
+<aside class="ed-card" id="ed-card" role="dialog" aria-modal="true" aria-labelledby="ed-title">
+  <div class="ed-head">
+    <button type="button" class="ed-close" id="ed-close" aria-label="Close">&times;</button>
+    <h3 id="ed-title">Author</h3>
+    <p class="ed-sub" id="ed-sub">Author 1</p>
+  </div>
+
+  <div class="ed-body">
+    <p class="flag err" id="ed-err"></p>
+
+    <p class="ed-sect">Name</p>
+    <div class="ed-grid">
+      <div class="fieldrow">
+        <label class="fl" for="ed-first"><span class="star">*</span> First</label>
+        <input type="text" id="ed-first">
+      </div>
+      <div class="fieldrow">
+        <label class="fl" for="ed-mid">Middle</label>
+        <input type="text" id="ed-mid">
+      </div>
+      <div class="fieldrow">
+        <label class="fl" for="ed-last"><span class="star">*</span> Last</label>
+        <input type="text" id="ed-last">
+      </div>
+      <div class="fieldrow">
+        <label class="fl" for="ed-deg">Degrees</label>
+        <input type="text" id="ed-deg" placeholder="DDS, MSc, PhD">
+      </div>
+      <p class="hint span2" style="margin:-8px 0 0">Degrees comma separated, as they should appear in print.</p>
+    </div>
+
+    <p class="ed-sect">Affiliation</p>
+    <div class="fieldrow">
+      <label class="fl" for="ed-inst"><span class="star">*</span> Institution</label>
+      <select id="ed-inst"></select>
+    </div>
+    <div class="fieldrow" id="ed-other-wrap" style="display:none">
+      <label class="fl" for="ed-inst-other"><span class="star">*</span> Institution Name</label>
+      <input type="text" id="ed-inst-other" placeholder="Enter institution">
+    </div>
+    <div class="fieldrow">
+      <label class="fl" for="ed-mail">E-Mail</label>
+      <input type="email" id="ed-mail" placeholder="name@institution.edu">
+      <p class="hint">Required for the mentor so approval can be routed.</p>
+    </div>
+
+    <p class="ed-sect">Role &amp; Participation</p>
+    <div class="fieldrow">
+      <label class="fl" for="ed-role"><span class="star">*</span> Role</label>
+      <select id="ed-role">
+        <option value="">Select:</option>
+        <option>First Author</option>
+        <option>Co-Author</option>
+        <option>Mentor (Last Author)</option>
+      </select>
+      <p class="hint">First Author moves to position 1. Mentor moves to the last position.</p>
+    </div>
+
+    <label class="togglerow">
+      <input type="checkbox" id="ed-pres">
+      <span>
+        <span class="tl">Presenting author</span>
+        <span class="td">Marked with an asterisk in the byline. Only one author may present.</span>
+      </span>
+    </label>
+    <label class="togglerow">
+      <input type="checkbox" id="ed-att" checked>
+      <span>
+        <span class="tl">Attending the event</span>
+        <span class="td">Name tags are generated from this. Presenters are always attending.</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="ed-foot">
+    <button type="button" class="btn" id="ed-cancel">Cancel</button>
+    <button type="button" class="btn primary" id="ed-save">Save Author</button>
+  </div>
+</aside>
+</div>
+
+<!-- ==================== CONFIRMATION / PROOF ==================== -->
+<div id="confirm-view" style="display:none">
+
+<header class="hero noprint">
+  <div class="hero-inner">
+    <span class="hero-badge">Submitted Successfully</span>
+    <h1>Your Abstract Has Been Submitted</h1>
+    <p>Save your confirmation ID. You will receive correspondence at the email address you provided.</p>
+  </div>
+  <div class="hero-stripe"></div>
+</header>
+
+<div class="confirm-wrap">
+
+  <div class="noprint" style="max-width:720px;margin:0 auto 28px;text-align:center">
+    <div style="background:var(--green-bg);border:1px solid var(--green-pale);border-radius:10px;padding:28px 24px 24px">
+      <p style="margin:0 0 4px;font-family:var(--mont);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-dk)">Confirmation ID</p>
+      <p style="margin:0 0 6px;font-family:var(--mont);font-size:32px;font-weight:800;color:var(--navy);letter-spacing:-0.5px" id="conf-id">&mdash;</p>
+      <p style="margin:0 0 16px;font-family:var(--sans);font-size:14px;color:var(--ink-soft)">Submitted <span id="conf-date">&mdash;</span></p>
+      <p style="margin:0"><span class="pill" id="status-pill">Pending Mentor Approval</span></p>
+      <p style="margin:8px 0 0;font-family:var(--sans);font-size:13px;color:var(--ink-soft)" id="status-detail">An approval request has been sent.</p>
+      <p style="margin:10px 0 0;font-family:var(--sans);font-size:13px;color:var(--ink-soft)">Email <a href="mailto:dcgsedr@augusta.edu" style="font-weight:600">dcgsedr@augusta.edu</a> with any questions or concerns.</p>
+    </div>
+
+    <div class="btnbar" style="justify-content:center;margin-top:20px">
+      <button type="button" class="btn primary" id="submit-another" style="padding:12px 28px">Submit Another Abstract</button>
+    </div>
+  </div>
+
+  <div class="confirm-cols">
+
+    <div class="confirm-side noprint">
+      <div class="statusbox">
+        <h3>Download</h3>
+        <p>Your abstract has been formatted to match the published layout in <em>Dentistry Review</em>.</p>
+        <div class="btnbar" style="margin-top:14px">
+          <button type="button" class="btn primary" id="dl-pdf" style="width:100%"><span class="ico">&#8595;</span>Print / Save as PDF</button>
+        </div>
+        <div class="btnbar" style="margin-top:8px">
+          <button type="button" class="btn" id="dl-txt" style="width:100%">Download as Plain Text</button>
+        </div>
+        <p class="hint" style="margin-top:12px">The PDF download opens your browser print dialog. Choose Save as PDF as the destination.</p>
+      </div>
+
+      <div class="strengths">
+        <h3>Next Steps</h3>
+        <ul>
+          <li><strong>Mentor approval</strong> must be recorded before the abstract enters review.</li>
+          <li><strong>Poster numbers</strong> are assigned by SeDR after acceptance.</li>
+          <li><strong>Formatting</strong> follows the <em>Dentistry Review</em> guide for authors.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="confirm-main">
+      <p class="kicker noprint">Formatted Abstract</p>
+      <div class="proof" id="proof">
+        <div class="runhead" id="p-runhead">&nbsp;</div>
+        <h2 id="p-title"></h2>
+        <p class="authors" id="p-authors"></p>
+        <p class="sec" id="p-obj"></p>
+        <p class="sec" id="p-met"></p>
+        <p class="sec" id="p-res"></p>
+        <p class="sec" id="p-con"></p>
+        <p class="sec" id="p-imp"></p>
+        <p class="doi" id="p-doi"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+
+<script>
+
+
+
+(function(){
+
+  /* ---------------- config ---------------- */
+  var BODY_LIMIT  = 300;   // combined words across the four required sections
+  var TITLE_LIMIT = 20;    // words in the title
+
+  document.getElementById('wc-max').textContent = BODY_LIMIT;
+  document.getElementById('tc-max').textContent = TITLE_LIMIT;
+
+  var ROLES = ['First Author','Co-Author','Mentor (Last Author)'];
+
+  /* ---------------- step nav ---------------- */
+  var LAST = 5, step = 0;
+  var panels = document.querySelectorAll('.panel');
+  var items  = document.querySelectorAll('#steplist li');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+
+  function show(n){
+    step = Math.max(0, Math.min(LAST, n));
+    panels.forEach(function(p){ p.classList.toggle('on', +p.dataset.panel === step); });
+    items.forEach(function(li,i){
+      li.setAttribute('aria-current', i===step ? 'true':'false');
+      li.querySelector('.tick').textContent = i < step ? '\u2714' : '';
+    });
+    prev.disabled = step === 0;
+    next.innerHTML = step === LAST ? 'Submit'
+      : 'Save and Continue <span class="ico" style="margin:0 0 0 5px">&rsaquo;</span>';
+    if (step === 1){ syncSubmitter(); byline(); }
+    if (step === 4) routing();
+    if (step === LAST){ buildReview(); showBlockers(); }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  items.forEach(function(li){
+    li.querySelector('button').addEventListener('click', function(){ show(+this.dataset.step); });
+  });
+  prev.addEventListener('click', function(){ show(step-1); });
+  next.addEventListener('click', function(){
+    if (step === LAST){ trySubmit(); return; }
+    show(step+1);
+  });
+
+  function flash(msg){
+    var n = document.getElementById('notice');
+    n.textContent = msg;
+    setTimeout(function(){ n.textContent=''; }, 2500);
+  }
+
+  /* ================= AUTHOR MODEL =================
+     Authors live in an array, not in DOM inputs. The table renders a
+     read-only summary; all editing happens in the slide-over card. */
+
+  var INSTITUTIONS = [
+    'Dental College of Georgia at Augusta University',
+    'Augusta University',
+    'Medical College of Georgia at Augusta University',
+    'College of Allied Health Sciences at Augusta University',
+    'University of Georgia',
+    'Georgia Institute of Technology',
+    'Emory University',
+    'Medical University of South Carolina',
+    'University of Alabama at Birmingham',
+    'University of Florida',
+    'University of North Carolina at Chapel Hill',
+    'Virginia Commonwealth University'
+  ];
+  var DEFAULT_INST = INSTITUTIONS[0];
+
+  var authors = [];
+  var editIdx = -1;          // index being edited, -1 when the card is closed
+  var submitterLinked = true; // author[0] mirrors Step 1 until decoupled
+
+  function blankAuthor(){
+    return { first:'', mid:'', last:'', deg:'', inst:DEFAULT_INST, instOther:'',
+             role:'', mail:'', att:true, pres:false };
+  }
+
+  function instOf(a){
+    return a.inst === '__other__' ? (a.instOther || '') : (a.inst || '');
+  }
+
+  function fullName(a, star){
+    var n = a.first;
+    if (a.mid) n += ' ' + a.mid;
+    if (a.last) n = (n ? n + ' ' : '') + a.last;
+    if (star) n += '*';
+    if (a.deg) n += ', ' + a.deg;
+    return n.trim();
+  }
+  function shortName(a){
+    var n = (a.first + ' ' + (a.mid ? a.mid + ' ' : '') + a.last).trim();
+    return n || 'Untitled author';
+  }
+  function initials(a){
+    var f = (a.first || '?').charAt(0), l = (a.last || '').charAt(0);
+    return (f + l).toUpperCase();
+  }
+
+  /* authorData() keeps the old shape so downstream code is untouched */
+  function authorData(){
+    return authors.map(function(a){
+      return { first:a.first, mid:a.mid, last:a.last, deg:a.deg,
+               inst:instOf(a), role:a.role, mail:a.mail, att:a.att };
+    });
+  }
+  function presenterIndex(){
+    for (var i=0;i<authors.length;i++){ if (authors[i].pres) return i; }
+    return -1;
+  }
+  function presenterData(){
+    var i = presenterIndex();
+    return i < 0 ? null : authorData()[i];
+  }
+  function mentor(){
+    var m = authorData().filter(function(a){ return a.role === 'Mentor (Last Author)'; });
+    return m.length ? m[0] : null;
+  }
+
+  /* ---------- ordering rules ---------- */
+  function settleOrder(){
+    var first = null, last = null, rest = [];
+    authors.forEach(function(a){
+      if (a.role === 'First Author' && !first) first = a;
+      else if (a.role === 'Mentor (Last Author)' && !last) last = a;
+      else rest.push(a);
+    });
+    authors = [].concat(first ? [first] : [], rest, last ? [last] : []);
+  }
+  function enforceUniqueRole(idx, value){
+    if (value !== 'First Author' && value !== 'Mentor (Last Author)') return 0;
+    var bumped = 0;
+    authors.forEach(function(a,i){
+      if (i !== idx && a.role === value){ a.role = 'Co-Author'; bumped++; }
+    });
+    return bumped;
+  }
+  function setPresenter(idx){
+    authors.forEach(function(a,i){ a.pres = (i === idx); });
+    if (idx >= 0) authors[idx].att = true;
+  }
+
+  /* ---------- messages ---------- */
+  function flashAuthors(msg, kind){
+    var box = document.getElementById('au-msgs');
+    if (!box) return;
+    var p = document.createElement('p');
+    p.className = 'flag' + (kind === 'ok' ? ' ok' : '');
+    p.style.margin = '0 0 8px';
+    p.textContent = msg;
+    box.insertBefore(p, box.firstChild);
+    setTimeout(function(){ if (p.parentNode) p.remove(); }, 4000);
+  }
+
+  /* ---------- render the summary list ---------- */
+  var auRows = document.getElementById('au-rows');
+
+  function renderAuthors(){
+    auRows.innerHTML = '';
+
+    if (!authors.length){
+      var empty = document.createElement('div');
+      empty.className = 'au-empty';
+      empty.innerHTML = 'No authors yet. Use <strong>Add Author</strong> to begin.';
+      auRows.appendChild(empty);
+      updatePresReq();
+      byline(); routing();
+      return;
+    }
+
+    authors.forEach(function(a, i){
+      var inst = instOf(a);
+      var incomplete = (!a.first || !a.last || !a.role || !inst);
+
+      var card = document.createElement('div');
+      card.className = 'au-card' +
+        (a.role === 'First Author' ? ' is-first' : '') +
+        (a.role === 'Mentor (Last Author)' ? ' is-mentor' : '') +
+        (incomplete ? ' is-incomplete' : '');
+      card.tabIndex = 0;
+      card.setAttribute('role','button');
+      card.setAttribute('aria-label','Edit ' + shortName(a));
+
+      /* line 2: role, institution, e-mail, separated by thin dividers */
+      var bits = [];
+      bits.push('<span class="rolelabel ' + roleClass(a.role) + '">' +
+                (a.role ? roleShort(a.role) : 'No role') + '</span>');
+      bits.push(inst ? escapeHtml(inst) : '<span class="blank">No institution</span>');
+      if (a.mail) bits.push('<span class="mail">' + escapeHtml(a.mail) + '</span>');
+
+      var tags = '';
+      if (a.pres) tags += '<span class="tag pres">Presenting</span>';
+      if (!a.att) tags += '<span class="tag off">Not attending</span>';
+      if (incomplete) tags += '<span class="tag warn">Incomplete</span>';
+
+      card.innerHTML =
+        '<div class="au-pos">' + (i+1) + '</div>' +
+        '<div class="au-main">' +
+          '<div class="au-line1">' +
+            '<span class="au-name">' + (shortName(a) === 'Untitled author'
+                ? '<span class="blank">Untitled author</span>'
+                : escapeHtml(shortName(a))) + '</span>' +
+            (a.deg ? '<span class="au-deg">' + escapeHtml(a.deg) + '</span>' : '') +
+            (tags ? '<span class="au-tags">' + tags + '</span>' : '') +
+          '</div>' +
+          '<div class="au-line2">' +
+            bits.join('<span class="sep">&middot;</span>') +
+          '</div>' +
+        '</div>' +
+        '<div class="au-act">' +
+          '<button type="button" class="rowbtn up" data-i="' + i + '" title="Move up" aria-label="Move up">&uarr;</button>' +
+          '<button type="button" class="rowbtn down" data-i="' + i + '" title="Move down" aria-label="Move down">&darr;</button>' +
+          '<button type="button" class="rowbtn del" data-i="' + i + '" title="Remove" aria-label="Remove">&times;</button>' +
+        '</div>';
+
+      /* pinned roles cannot be nudged */
+      var pinned = (a.role === 'First Author' || a.role === 'Mentor (Last Author)');
+      if (pinned){
+        card.querySelector('.up').disabled = true;
+        card.querySelector('.down').disabled = true;
+      }
+      if (i === 0) card.querySelector('.up').disabled = true;
+      if (i === authors.length - 1) card.querySelector('.down').disabled = true;
+
+      card.addEventListener('click', function(e){
+        if (e.target.closest('.rowbtn')) return;
+        openEditor(i);
+      });
+      card.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openEditor(i); }
+      });
+
+      auRows.appendChild(card);
+    });
+
+    auRows.querySelectorAll('.rowbtn').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        if (this.disabled) return;
+        var i = +this.dataset.i;
+        if (this.classList.contains('up')) move(i,-1);
+        else if (this.classList.contains('down')) move(i,1);
+        else if (this.classList.contains('del')) removeAuthor(i);
+      });
+    });
+
+    updatePresReq();
+    byline(); routing();
+  }
+
+  /* A presenter is mandatory, but never guessed. Step 1 asks the submitter
+     directly; only an explicit "yes" claims the slot for author 1. If the
+     current presenter is deleted the slot is cleared, not silently moved. */
+  function submitterPresenting(){
+    return document.getElementById('f-presenting').value;   // '', 'yes', 'no'
+  }
+
+  function applyPresenterAnswer(){
+    var ans = submitterPresenting();
+    if (ans === 'yes'){
+      /* author 1 is the submitter's entry while the mirror is intact */
+      var idx = submitterLinked ? 0 : findSubmitterAuthor();
+      if (idx >= 0) setPresenter(idx);
+    } else if (ans === 'no'){
+      var cur = presenterIndex();
+      var sIdx = submitterLinked ? 0 : findSubmitterAuthor();
+      if (cur >= 0 && cur === sIdx) setPresenter(-1);
+    }
+    renderAuthors();
+  }
+
+  /* match an author row against the Step 1 name, for use after decoupling */
+  function findSubmitterAuthor(){
+    var f = document.getElementById('f-first').value.trim().toLowerCase();
+    var l = document.getElementById('f-last').value.trim().toLowerCase();
+    if (!f && !l) return -1;
+    for (var i=0;i<authors.length;i++){
+      if (authors[i].first.toLowerCase() === f && authors[i].last.toLowerCase() === l) return i;
+    }
+    return -1;
+  }
+
+  /* kept for callers that need the slot filled after a deletion; returns
+     false and leaves it empty rather than picking someone arbitrarily */
+  function ensurePresenter(){
+    return false;
+  }
+
+  function updatePresReq(){
+    var box = document.getElementById('pres-req');
+    var txt = document.getElementById('pres-req-txt');
+    if (!box) return;
+    var i = presenterIndex();
+    if (i >= 0 && (authors[i].first || authors[i].last)){
+      box.className = 'pres-req ok';
+      txt.innerHTML = '<strong>' + escapeHtml(shortName(authors[i])) +
+        '</strong> will present. Open the author to change this.';
+    } else {
+      box.className = 'pres-req';
+      txt.innerHTML = 'No presenter designated. Open an author and tick ' +
+        '<strong>Presenting author</strong>, or answer the presenting question in Step 1.';
+    }
+  }
+
+  function roleShort(r){
+    if (r === 'Mentor (Last Author)') return 'Mentor';
+    if (r === 'First Author') return 'First';
+    return 'Co-Author';
+  }
+  function roleClass(r){
+    if (r === 'Mentor (Last Author)') return 'mentor';
+    if (r === 'First Author') return 'first';
+    return 'co';
+  }
+
+  function move(i, d){
+    var j = i + d;
+    if (j < 0 || j >= authors.length) return;
+    var a = authors[i];
+    if (a.role === 'First Author' || a.role === 'Mentor (Last Author)'){
+      flashAuthors(roleShort(a.role) + ' position is fixed by role.');
+      return;
+    }
+    var b = authors[j];
+    if (b.role === 'First Author' || b.role === 'Mentor (Last Author)'){
+      flashAuthors('Cannot move past the ' + roleShort(b.role) + '.');
+      return;
+    }
+    authors[i] = b; authors[j] = a;
+    renderAuthors();
+  }
+
+  function removeAuthor(i){
+    if (i === 0) submitterLinked = false;
+    var wasPres = authors[i].pres;
+    authors.splice(i,1);
+    settleOrder();
+    renderAuthors();
+    if (wasPres && authors.length){
+      flashAuthors('That author was presenting. Choose a new presenter before submitting.');
+    }
+  }
+
+  /* ---------- the editor card ---------- */
+  var ed = {
+    scrim: document.getElementById('ed-scrim'),
+    card:  document.getElementById('ed-card'),
+    title: document.getElementById('ed-title'),
+    sub:   document.getElementById('ed-sub'),
+    first: document.getElementById('ed-first'),
+    mid:   document.getElementById('ed-mid'),
+    last:  document.getElementById('ed-last'),
+    deg:   document.getElementById('ed-deg'),
+    inst:  document.getElementById('ed-inst'),
+    other: document.getElementById('ed-inst-other'),
+    otherWrap: document.getElementById('ed-other-wrap'),
+    role:  document.getElementById('ed-role'),
+    mail:  document.getElementById('ed-mail'),
+    att:   document.getElementById('ed-att'),
+    pres:  document.getElementById('ed-pres'),
+    err:   document.getElementById('ed-err')
+  };
+
+  /* populate the institution dropdown once */
+  (function buildInstOptions(){
+    var html = '';
+    INSTITUTIONS.forEach(function(n){
+      html += '<option value="' + escapeHtml(n) + '">' + escapeHtml(n) + '</option>';
+    });
+    html += '<option value="__other__">Other (enter below)</option>';
+    ed.inst.innerHTML = html;
+  })();
+
+  ed.inst.addEventListener('change', function(){
+    ed.otherWrap.style.display = this.value === '__other__' ? 'block' : 'none';
+    if (this.value === '__other__') ed.other.focus();
+  });
+
+  function openEditor(i){
+    editIdx = i;
+    var a = authors[i];
+    ed.title.textContent = shortName(a) === 'Untitled author' ? 'New Author' : shortName(a);
+    ed.sub.textContent = 'Author ' + (i+1) + ' of ' + authors.length;
+    ed.first.value = a.first;
+    ed.mid.value = a.mid;
+    ed.last.value = a.last;
+    ed.deg.value = a.deg;
+    ed.inst.value = INSTITUTIONS.indexOf(a.inst) >= 0 ? a.inst : (a.inst === '__other__' ? '__other__' : DEFAULT_INST);
+    ed.other.value = a.instOther || '';
+    ed.otherWrap.style.display = ed.inst.value === '__other__' ? 'block' : 'none';
+    ed.role.value = a.role;
+    ed.mail.value = a.mail;
+    ed.att.checked = a.att;
+    ed.pres.checked = a.pres;
+    ed.err.style.display = 'none';
+    ed.err.textContent = '';
+
+    ed.scrim.classList.add('open');
+    ed.card.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ ed.first.focus(); }, 60);
+  }
+
+  function closeEditor(){
+    editIdx = -1;
+    ed.scrim.classList.remove('open');
+    ed.card.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function saveEditor(){
+    if (editIdx < 0) return;
+    var errs = [];
+    if (!ed.first.value.trim()) errs.push('First name is required.');
+    if (!ed.last.value.trim())  errs.push('Last name is required.');
+    if (!ed.role.value)         errs.push('A role must be assigned.');
+    if (ed.inst.value === '__other__' && !ed.other.value.trim()){
+      errs.push('Enter the institution name.');
+    }
+    if (ed.role.value === 'Mentor (Last Author)' && !ed.mail.value.trim()){
+      errs.push('A mentor must have an e-mail address so approval can be routed.');
+    }
+    if (errs.length){
+      ed.err.innerHTML = '<span class="boxhead">Check These Fields</span>' +
+        errs.map(escapeHtml).join('<br>');
+      ed.err.style.display = 'block';
+      return;
+    }
+
+    var a = authors[editIdx];
+    var wasLinked = (editIdx === 0 && submitterLinked);
+    a.first = ed.first.value.trim();
+    a.mid   = ed.mid.value.trim();
+    a.last  = ed.last.value.trim();
+    a.deg   = ed.deg.value.trim();
+    a.inst  = ed.inst.value;
+    a.instOther = ed.other.value.trim();
+    a.mail  = ed.mail.value.trim();
+    a.att   = ed.att.checked;
+
+    var bumped = enforceUniqueRole(editIdx, ed.role.value);
+    a.role = ed.role.value;
+
+    if (ed.pres.checked){
+      setPresenter(editIdx);
+    } else if (a.pres){
+      /* a presenter is mandatory, so refuse to leave the slot empty */
+      var other = -1;
+      for (var k=0;k<authors.length;k++){
+        if (k !== editIdx && (authors[k].first || authors[k].last)){ other = k; break; }
+      }
+      if (other < 0){
+        ed.err.innerHTML = '<span class="boxhead">Presenter Required</span>' +
+          'One author must present. Assign another author as presenter first.';
+        ed.err.style.display = 'block';
+        ed.pres.checked = true;
+        return;
+      }
+      a.pres = false;
+      setPresenter(other);
+    }
+
+    /* hand-editing row 1 breaks the mirror from Step 1 */
+    if (wasLinked) submitterLinked = false;
+
+    settleOrder();
+    closeEditor();
+    renderAuthors();
+    if (bumped) flashAuthors('Another author held that role and was changed to Co-Author.');
+  }
+
+  document.getElementById('ed-save').addEventListener('click', saveEditor);
+  document.getElementById('ed-cancel').addEventListener('click', closeEditor);
+  document.getElementById('ed-close').addEventListener('click', closeEditor);
+  ed.scrim.addEventListener('click', function(e){
+    /* the card is nested inside the scrim, so only backdrop clicks close */
+    if (e.target === ed.scrim) closeEditor();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && editIdx >= 0) closeEditor();
+  });
+  ed.card.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT'){ e.preventDefault(); saveEditor(); }
+  });
+
+  /* ---------- toolbar ---------- */
+  function addAuthor(open){
+    var a = blankAuthor();
+    if (!authors.length) a.role = 'First Author';
+    var mentorIdx = -1;
+    authors.forEach(function(x,i){ if (x.role === 'Mentor (Last Author)') mentorIdx = i; });
+    if (mentorIdx >= 0) authors.splice(mentorIdx, 0, a);
+    else authors.push(a);
+    settleOrder();
+    renderAuthors();
+    if (open !== false){
+      var idx = authors.indexOf(a);
+      openEditor(idx);
+    }
+  }
+  document.getElementById('au-add').addEventListener('click', function(){ addAuthor(true); });
+
+  document.getElementById('au-check').addEventListener('click', function(){
+    var msgs = validateAuthors();
+    var box = document.getElementById('au-msgs');
+    box.innerHTML = '';
+    if (!msgs.length){
+      box.innerHTML = '<p class="flag ok"><span class="boxhead">Valid</span>Author list is valid.</p>';
+    } else {
+      var p = document.createElement('p');
+      p.className = 'flag err';
+      p.innerHTML = '<span class="boxhead">' + msgs.length + ' Item' + (msgs.length>1?'s':'') +
+        ' To Fix</span>' + msgs.map(escapeHtml).join('<br>');
+      box.appendChild(p);
+    }
+  });
+
+  /* ---------- submitter carry-over ---------- */
+  function submitterFields(){
+    return {
+      first: document.getElementById('f-first').value.trim(),
+      mid:   document.getElementById('f-mid').value.trim(),
+      last:  document.getElementById('f-last').value.trim(),
+      inst:  document.getElementById('f-inst').value,
+      instOther: document.getElementById('f-inst-other').value.trim(),
+      mail:  document.getElementById('f-email').value.trim()
+    };
+  }
+
+  function syncSubmitter(){
+    if (!submitterLinked) return;
+    var d = submitterFields();
+    if (!authors.length) authors.push(blankAuthor());
+    if (!authors[0].role) authors[0].role = 'First Author';
+    authors[0].first = d.first;
+    authors[0].mid   = d.mid;
+    authors[0].last  = d.last;
+    authors[0].inst  = d.inst || DEFAULT_INST;
+    authors[0].instOther = d.instOther;
+    authors[0].mail  = d.mail;
+    if (submitterPresenting() === 'yes') setPresenter(0);
+    renderAuthors();
+  }
+
+  function copySubmitter(){
+    var d = submitterFields();
+    if (!d.first && !d.last){
+      flashAuthors('Enter your name in Step 1 first.');
+      return;
+    }
+    var target = null;
+    authors.forEach(function(a){
+      if (!target && !a.first && !a.last) target = a;
+    });
+    if (!target){ target = blankAuthor(); authors.push(target); }
+    target.first = d.first; target.mid = d.mid; target.last = d.last;
+    target.inst = d.inst || DEFAULT_INST; target.instOther = d.instOther;
+    target.mail = d.mail;
+    if (!target.role) target.role = authors.length === 1 ? 'First Author' : 'Co-Author';
+    if (submitterPresenting() === 'yes') setPresenter(authors.indexOf(target));
+    submitterLinked = false;
+    settleOrder();
+    renderAuthors();
+    flashAuthors('Submitter details copied into the author list.', 'ok');
+  }
+
+  document.getElementById('au-copy').addEventListener('click', copySubmitter);
+  ['f-first','f-mid','f-last','f-email'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', syncSubmitter);
+  });
+
+  document.getElementById('f-presenting').addEventListener('change', function(){
+    var note = document.getElementById('presenting-note');
+    var txt  = document.getElementById('presenting-note-txt');
+    if (this.value === 'yes'){
+      note.style.display = 'block';
+      note.className = 'flag ok';
+      txt.textContent = 'You will be marked as the presenting author in Step 2. ' +
+        'You can change this there if someone else presents.';
+    } else if (this.value === 'no'){
+      note.style.display = 'block';
+      note.className = 'flag';
+      txt.textContent = 'Designate the presenting author in Step 2 before submitting.';
+    } else {
+      note.style.display = 'none';
+    }
+    applyPresenterAnswer();
+  });
+  document.getElementById('f-inst').addEventListener('change', syncSubmitter);
+  document.getElementById('f-inst-other').addEventListener('input', syncSubmitter);
+
+  /* ---------- byline preview ---------- */
+  function byline(){
+    var box = document.getElementById('byline-preview');
+    var pIdx = presenterIndex();
+    var parts = [], any = false;
+    authors.forEach(function(a, i){
+      if (!(a.first || a.last)) return;
+      parts.push(fullName(a, i === pIdx));
+      any = true;
+    });
+    if (!any){ box.innerHTML = '<span class="blank">No authors entered</span>'; return; }
+    var html = parts.map(function(n){
+      return escapeHtml(n).replace('*','<span class="pstar">*</span>');
+    }).join(', ');
+    if (pIdx >= 0){
+      html += '<br><span class="presnote">* Presenting author</span>';
+    }
+    box.innerHTML = html;
+  }
+
+  /* ---------- validation ---------- */
+  function validateAuthors(){
+    var msgs = [];
+    var named = authors.filter(function(a){ return a.first || a.last; });
+    if (!named.length) msgs.push('At least one author is required.');
+
+    authors.forEach(function(a,i){
+      if (!a.first || !a.last) msgs.push('Author ' + (i+1) + ' is missing a first or last name.');
+      if (!a.role) msgs.push('Author ' + (i+1) + ' has no role assigned.');
+      if (!instOf(a)) msgs.push('Author ' + (i+1) + ' is missing an institution.');
+    });
+
+    var firsts = named.filter(function(a){ return a.role === 'First Author'; });
+    if (firsts.length === 0) msgs.push('No First Author has been assigned.');
+    if (firsts.length > 1)  msgs.push('More than one author is marked as First Author.');
+
+    var mentors = named.filter(function(a){ return a.role === 'Mentor (Last Author)'; });
+    if (mentors.length > 1) msgs.push('More than one author is marked as Mentor.');
+    if (mentors.length === 1 && !mentors[0].mail){
+      msgs.push('The mentor has no e-mail address. Approval cannot be routed without one.');
+    }
+    if (mentorRequired() && mentors.length === 0){
+      msgs.push('Your education level requires a Mentor (Last Author). Only Faculty submitters may omit one.');
+    }
+
+    var pIdx = presenterIndex();
+    if (pIdx < 0) msgs.push('No presenter has been designated.');
+    else if (!authors[pIdx].first && !authors[pIdx].last){
+      msgs.push('The designated presenter has no name entered.');
+    } else if (!authors[pIdx].att){
+      msgs.push('The designated presenter is not marked as attending.');
+    }
+
+    return msgs;
+  }
+
+
+  /* Step 1 institution: reveal the free-text box when Other is chosen */
+  function submitterInst(){
+    var s = document.getElementById('f-inst');
+    return s.value === '__other__'
+      ? document.getElementById('f-inst-other').value.trim()
+      : s.value;
+  }
+  document.getElementById('f-inst').addEventListener('change', function(){
+    document.getElementById('f-inst-other-wrap').style.display =
+      this.value === '__other__' ? 'block' : 'none';
+  });
+
+  /* ---------------- level / mentor rule ---------------- */
+  var level = document.getElementById('f-level');
+  level.addEventListener('change', function(){
+    document.getElementById('mentor-required-note').style.display =
+      (this.value && this.value !== 'Faculty') ? 'block' : 'none';
+    routing();
+  });
+  function mentorRequired(){
+    var v = level.value;
+    return !!v && v !== 'Faculty';
+  }
+
+  function routing(){
+    var m = mentor();
+    var line = document.getElementById('routing-line');
+    if (!line) return;
+    if (m && m.mail){
+      line.innerHTML = 'An approval request will be sent to <strong>' + escapeHtml(fullName(m)) +
+        '</strong> at <strong>' + escapeHtml(m.mail) + '</strong> as soon as this abstract is submitted.';
+    } else if (m){
+      line.innerHTML = 'A mentor is listed but has <strong>no e-mail address</strong>. Add one in Step 2 so the approval request can be sent.';
+    } else if (mentorRequired()){
+      line.innerHTML = 'No mentor has been listed in Step 2. <strong>Your level requires one.</strong>';
+    } else {
+      line.innerHTML = 'No mentor has been listed. Faculty submissions do not require mentor approval, and <strong>no approval request will be sent</strong>.';
+    }
+  }
+
+
+  function validateAll(){
+    var msgs = validateAuthors();
+
+    ['f-first','f-last','f-email','f-level'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el.value.trim()) msgs.push('Step 1: ' + el.dataset.key + ' is required.');
+    });
+
+    if (!submitterInst()) msgs.push('Step 1: Institution is required.');
+    if (!submitterPresenting()) msgs.push('Step 1: Answer whether you will be presenting.');
+
+    var cat = document.querySelector('input[name=cat]:checked');
+    if (!cat) msgs.push('Step 3: A research category is required.');
+    if (cat && cat.value === 'Other' && !document.getElementById('f-other').value.trim()){
+      msgs.push('Step 3: "Other" requires a description.');
+    }
+
+    if (!document.getElementById('f-title').value.trim()) msgs.push('Step 4: Abstract title is required.');
+    if (titleWords() > TITLE_LIMIT) msgs.push('Step 4: Title exceeds ' + TITLE_LIMIT + ' words.');
+
+    ['f-obj','f-met','f-res','f-con'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el.value.trim()) msgs.push('Step 4: ' + el.dataset.key + ' section is empty.');
+    });
+    if (bodyWords() > BODY_LIMIT){
+      msgs.push('Step 4: Abstract body is ' + bodyWords() + ' words, over the ' + BODY_LIMIT + ' word limit.');
+    }
+
+    if (!document.getElementById('f-pub').value) msgs.push('Step 5: Previously published question is unanswered.');
+    var comp = document.getElementById('f-comp');
+    if (!comp.value) msgs.push('Step 5: Competition question is unanswered.');
+    if (cat && cat.dataset.comp === '0' && comp.value === 'Yes'){
+      msgs.push('Step 5: The selected category is not eligible for the competition.');
+    }
+
+    return msgs;
+  }
+
+  function showBlockers(){
+    var box = document.getElementById('blockers');
+    box.innerHTML = '';
+    var msgs = validateAll();
+    if (!msgs.length) return;
+    var head = document.createElement('p');
+    head.className = 'flag err';
+    head.innerHTML = '<span class="boxhead">Action Required</span><strong>' + msgs.length +
+      ' item' + (msgs.length>1?'s':'') +
+      ' must be corrected before this abstract can be submitted.</strong>';
+    box.appendChild(head);
+    var ul = document.createElement('ul');
+    ul.style.cssText = 'margin:0 0 18px;padding-left:22px;font-size:13px;color:#0a4a75;';
+    msgs.forEach(function(m){
+      var li = document.createElement('li'); li.textContent = m; li.style.margin='3px 0'; ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  }
+
+  /* ---------------- counts ---------------- */
+  function words(s){ return s.trim() ? s.trim().split(/\s+/).length : 0; }
+  function bodyWords(){
+    var t = 0;
+    document.querySelectorAll('[data-count]').forEach(function(e){ t += words(e.value); });
+    return t;
+  }
+  function titleWords(){ return words(document.getElementById('f-title').value); }
+
+  function paintMeter(meterId, fillId, n, limit){
+    var m = document.getElementById(meterId), f = document.getElementById(fillId);
+    var pct = Math.min(100, n / limit * 100);
+    f.style.width = pct + '%';
+    m.classList.toggle('warn', pct >= 85 && n <= limit);
+    m.classList.toggle('over', n > limit);
+  }
+
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    el.addEventListener('input', function(){
+      var n = bodyWords();
+      document.getElementById('wc-n').textContent = n;
+      document.getElementById('wc').classList.toggle('over', n > BODY_LIMIT);
+      paintMeter('bm','bm-fill', n, BODY_LIMIT);
+    });
+  });
+  document.getElementById('f-title').addEventListener('input', function(){
+    var n = titleWords();
+    document.getElementById('tc-n').textContent = n;
+    document.getElementById('wc-title').classList.toggle('over', n > TITLE_LIMIT);
+    paintMeter('tm','tm-fill', n, TITLE_LIMIT);
+  });
+
+  /* ---------------- category / publication ---------------- */
+  var otherWrap = document.getElementById('other-wrap');
+  var compWarn = document.getElementById('comp-warn');
+  var compSel = document.getElementById('f-comp');
+  function catState(){
+    var sel = document.querySelector('input[name=cat]:checked');
+    otherWrap.style.display = (sel && sel.value === 'Other') ? 'block' : 'none';
+    var eligible = !sel || sel.dataset.comp === '1';
+    compWarn.style.display = (!eligible && compSel.value === 'Yes') ? 'block' : 'none';
+  }
+  document.querySelectorAll('input[name=cat]').forEach(function(r){ r.addEventListener('change', catState); });
+  compSel.addEventListener('change', catState);
+  document.getElementById('f-pub').addEventListener('change', function(){
+    document.getElementById('pub-wrap').style.display = this.value === 'Yes' ? 'block' : 'none';
+  });
+
+  /* ---------------- review ---------------- */
+  function buildReview(){
+    var box = document.getElementById('review');
+    box.innerHTML = '';
+    function row(k,v){
+      var d=document.createElement('dl'); d.className='rev';
+      var dt=document.createElement('dt'); dt.textContent=k;
+      var dd=document.createElement('dd');
+      if (v){ dd.textContent=v; } else { dd.textContent='Not provided'; dd.className='blank'; }
+      d.appendChild(dt); d.appendChild(dd); box.appendChild(d);
+    }
+
+    ['f-first','f-mid','f-last','f-email','f-level'].forEach(function(id){
+      var el=document.getElementById(id); row(el.dataset.key, el.value.trim());
+    });
+    row('Institution', submitterInst());
+    var pa = submitterPresenting();
+    row('Submitter Presenting', pa === 'yes' ? 'Yes' : (pa === 'no' ? 'No' : ''));
+
+    var list = authorData().filter(function(a){ return a.first || a.last; });
+    row('Author Line', list.map(fullName).join(', '));
+    row('Roles', list.map(function(a){ return fullName(a) + (a.role ? ' [' + a.role + ']' : ' [no role]'); }).join('; '));
+    var p = presenterData();
+    row('Presenter', p ? fullName(p) : '');
+    row('Attending (name tags)', list.filter(function(a){return a.att;}).map(fullName).join(', '));
+
+    var m = mentor();
+    row('Mentor', m ? fullName(m) + (m.mail ? ', ' + m.mail : '') : (mentorRequired() ? '' : 'Not required, Faculty submission'));
+
+    var cat = document.querySelector('input[name=cat]:checked');
+    row('Research Category', cat ? cat.value : '');
+    if (cat && cat.value === 'Other') row('Other Category', document.getElementById('f-other').value.trim());
+
+    ['f-title','f-obj','f-met','f-res','f-con','f-imp','f-fund','f-pub'].forEach(function(id){
+      var el=document.getElementById(id); row(el.dataset.key, el.value.trim());
+    });
+    row('Abstract Word Count', bodyWords() + ' of ' + BODY_LIMIT);
+    if (document.getElementById('f-pub').value === 'Yes'){
+      row('Prior Publication', document.getElementById('f-pubwhere').value.trim());
+    }
+    row('Competing', compSel.value);
+  }
+
+  /* ---------------- submit ---------------- */
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  /* ============ GOOGLE APPS SCRIPT URL ============
+     After deploying Code.gs as a web app, paste the URL here. */
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYT1tdoSfiNJopJdcHa_SmcPaNDCSebikq8PNJQJj0BKAiKyTOg_QxbX6MJMfFAwSEhQ/exec';
+
+  function generateId(){
+    var hex = Math.random().toString(16).substring(2, 7);
+    return 'SEDR-2027-' + hex;
+  }
+
+  function collectFormData(id){
+    var cat = document.querySelector('input[name=cat]:checked');
+    return {
+      action: 'submit',
+      id: id,
+      submitter: {
+        first:       document.getElementById('f-first').value.trim(),
+        mid:         document.getElementById('f-mid').value.trim(),
+        last:        document.getElementById('f-last').value.trim(),
+        email:       document.getElementById('f-email').value.trim(),
+        institution: submitterInst(),
+        level:       document.getElementById('f-level').value,
+        presenting:  submitterPresenting()
+      },
+      authors: authors.map(function(a){
+        return { first:a.first, mid:a.mid, last:a.last, deg:a.deg,
+                 inst:instOf(a), role:a.role, mail:a.mail, att:a.att, pres:a.pres };
+      }),
+      category:      cat ? cat.value : '',
+      categoryOther: document.getElementById('f-other').value.trim(),
+      title:         document.getElementById('f-title').value.trim(),
+      objectives:    document.getElementById('f-obj').value.trim(),
+      methods:       document.getElementById('f-met').value.trim(),
+      results:       document.getElementById('f-res').value.trim(),
+      conclusions:   document.getElementById('f-con').value.trim(),
+      implications:  document.getElementById('f-imp').value.trim(),
+      funding:       document.getElementById('f-fund').value.trim(),
+      previouslyPublished: document.getElementById('f-pub').value,
+      publishedWhere:      document.getElementById('f-pubwhere').value.trim(),
+      competing:           document.getElementById('f-comp').value
+    };
+  }
+
+  function trySubmit(){
+    var msgs = validateAll();
+    if (msgs.length){
+      showBlockers();
+      window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
+
+    var btn = document.getElementById('next');
+    btn.disabled = true;
+    btn.innerHTML = 'Submitting\u2026';
+
+    var id   = generateId();
+    var data = collectFormData(id);
+
+    if (!SCRIPT_URL){
+      finishSubmit(id);
+      return;
+    }
+
+    /* POST via a hidden form targeting a hidden iframe.
+       This bypasses CORS entirely and is the most reliable
+       way to reach Apps Script from an external page. */
+    var iframe = document.createElement('iframe');
+    iframe.name = 'sedr-post';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = SCRIPT_URL;
+    form.target = 'sedr-post';
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'data';
+    input.value = JSON.stringify(data);
+    form.appendChild(input);
+    document.body.appendChild(form);
+
+    iframe.addEventListener('load', function(){
+      setTimeout(function(){
+        try { document.body.removeChild(iframe); } catch(e){}
+        try { document.body.removeChild(form); } catch(e){}
+      }, 300);
+      finishSubmit(id);
+    });
+
+    form.submit();
+  }
+
+  function finishSubmit(id){
+    confId = id;
+    buildProof();
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('confirm-view').style.display = 'block';
+    window.scrollTo({top:0});
+  }
+  var confId = '';
+
+  document.getElementById('submit-another').addEventListener('click', function(){
+    /* Reset the entire form for a fresh submission */
+    document.getElementById('confirm-view').style.display = 'none';
+    document.getElementById('form-view').style.display = 'block';
+
+    /* clear all inputs */
+    document.querySelectorAll('input[type=text],input[type=email],textarea').forEach(function(el){
+      el.value = '';
+    });
+    document.querySelectorAll('select').forEach(function(el){
+      el.selectedIndex = 0;
+    });
+    document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(function(el){
+      el.checked = false;
+    });
+
+    /* reset authors */
+    authors = [];
+    var a = blankAuthor();
+    a.role = 'First Author';
+    authors.push(a);
+    submitterLinked = true;
+    renderAuthors();
+
+    /* reset category and conditional fields */
+    document.getElementById('other-wrap').style.display = 'none';
+    document.getElementById('pub-wrap').style.display = 'none';
+    document.getElementById('comp-warn').style.display = 'none';
+    document.getElementById('mentor-required-note').style.display = 'none';
+    document.getElementById('presenting-note').style.display = 'none';
+    if (document.getElementById('f-inst-other-wrap'))
+      document.getElementById('f-inst-other-wrap').style.display = 'none';
+
+    /* reset counters */
+    document.getElementById('wc-n').textContent = '0';
+    document.getElementById('tc-n').textContent = '0';
+    document.getElementById('wc').classList.remove('over');
+    document.getElementById('wc-title').classList.remove('over');
+    document.getElementById('bm-fill').style.width = '0';
+    document.getElementById('tm-fill').style.width = '0';
+
+    /* reset submit button */
+    var btn = document.getElementById('next');
+    btn.disabled = false;
+    btn.innerHTML = 'Save and Continue <span class="ico" style="margin:0 0 0 6px">&rsaquo;</span>';
+
+    confId = '';
+    show(0);
+    window.scrollTo({top:0});
+  });
+
+  function buildProof(){
+    var id = confId || 'SEDR-2027-demo';
+    document.getElementById('conf-id').textContent = id;
+    var now = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var dstr = String(now.getDate()).padStart(2,'0') + '-' + months[now.getMonth()] + '-' + now.getFullYear();
+    document.getElementById('conf-date').textContent = dstr;
+
+    var m = mentor();
+    var pill = document.getElementById('status-pill');
+    var detail = document.getElementById('status-detail');
+    if (m && m.mail){
+      pill.textContent = 'Pending mentor approval';
+      pill.className = 'pill';
+      detail.innerHTML = 'An approval request has been sent to <strong>' + escapeHtml(m.mail) +
+        '</strong>. Your submission is not final until the mentor responds.';
+    } else {
+      pill.textContent = 'Received';
+      pill.className = 'pill ok';
+      detail.innerHTML = 'Faculty submission, no mentor approval required. A confirmation has been sent to <strong>' +
+        escapeHtml(document.getElementById('f-email').value.trim()) + '</strong>.';
+    }
+
+    var full = authorData();
+    var pIdx = presenterIndex();
+    var pres = pIdx < 0 ? null : full[pIdx];
+
+    /* Filter to named authors, tracking which filtered position is the
+       presenter. Comparing objects fails here because authorData() builds
+       fresh objects on every call. */
+    var list = [], presPos = -1;
+    full.forEach(function(a, i){
+      if (a.first || a.last){
+        if (i === pIdx) presPos = list.length;
+        list.push(a);
+      }
+    });
+
+    // running head, mimics the journal page header
+    var lastNames = list.map(function(a){ return a.last; }).filter(Boolean);
+    var head = lastNames.length > 2
+      ? lastNames[0] + ', ' + lastNames[1] + ' and ' + lastNames[lastNames.length-1]
+      : lastNames.join(' and ');
+    document.getElementById('p-runhead').textContent =
+      head + '   Dentistry Review ' + now.getFullYear() + '   |   ' + id;
+
+    document.getElementById('p-title').textContent = document.getElementById('f-title').value.trim();
+
+    var byl = list.map(function(a, i){
+      return fullName(a, i === presPos);
+    }).join(', ');
+    document.getElementById('p-authors').innerHTML = escapeHtml(byl) +
+      (presPos >= 0 ? '<br><span class="presnote">* Presenting author</span>' : '');
+
+    function sec(elId, label, srcId){
+      var v = document.getElementById(srcId).value.trim();
+      var el = document.getElementById(elId);
+      if (!v){ el.style.display='none'; return; }
+      el.style.display='block';
+      el.innerHTML = '<b>' + label + ':</b> ' + escapeHtml(v);
+    }
+    sec('p-obj','OBJECTIVES','f-obj');
+    sec('p-met','METHODS','f-met');
+    sec('p-res','RESULTS','f-res');
+    sec('p-con','CONCLUSIONS','f-con');
+    sec('p-imp','IMPLICATIONS','f-imp');
+
+    document.getElementById('p-doi').textContent = id + '  |  doi: pending assignment';
+  }
+
+  document.getElementById('dl-pdf').addEventListener('click', function(){ window.print(); });
+
+  document.getElementById('dl-txt').addEventListener('click', function(){
+    var p = document.getElementById('proof');
+    var lines = [];
+    lines.push(document.getElementById('p-title').textContent);
+    lines.push('');
+    lines.push(document.getElementById('p-authors').textContent.replace(/\s*\* Presenting author\s*/,''));
+    lines.push('');
+    ['p-obj','p-met','p-res','p-con','p-imp'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el.style.display !== 'none' && el.textContent.trim()) lines.push(el.textContent, '');
+    });
+    lines.push(document.getElementById('p-doi').textContent);
+    var blob = new Blob([lines.join('\n')], {type:'text/plain'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'abstract.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  /* init */
+  authors.push(blankAuthor());
+  authors[0].role = 'First Author';
+  authors[0].pres = false;  // set only by the Step 1 question or the editor
+  renderAuthors();
+  show(0);
+})();
+
+
+
+</script>
+</body>
+</html>
