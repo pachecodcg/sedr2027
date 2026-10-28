@@ -512,7 +512,7 @@ table.grid tbody tr:nth-child(even){background:var(--raised)}
               <span class="sub">Techniques, patient studies, case studies</span></label>
             <label><input type="radio" name="cat" value="Educational or Behavioral" data-comp="1"><span class="name">Educational or Behavioral</span>
               <span class="sub">Surveys, education research</span></label>
-            <label><input type="radio" name="cat" value="Literature Review" data-comp="0"><span class="name">Literature Review</span><span class="noncomp">Not competition eligible</span>
+            <label><input type="radio" name="cat" value="Literature Review" data-comp="1"><span class="name">Literature Review</span>
               <span class="sub">Systematic and narrative reviews</span></label>
             <label><input type="radio" name="cat" value="Project in Development" data-comp="0"><span class="name">Project in Development</span><span class="noncomp">Not competition eligible</span>
               <span class="sub">Preliminary work, no data yet, research proposal</span></label>
@@ -1711,7 +1711,7 @@ table.grid tbody tr:nth-child(even){background:var(--raised)}
     var catOut = !!sel && sel.dataset.comp === '0';
     var pubOut = document.getElementById('f-pub').value === 'Yes';
     var reason = catOut
-      ? (sel.value === 'Literature Review' ? 'Literature reviews are' : 'Projects in development are') + ' not eligible for the competition (Step 3).'
+      ? 'Projects in development are not eligible for the competition (Step 3).'
       : (pubOut ? 'Previously published work is not eligible for the competition.' : '');
     var wrap = document.getElementById('comp-wrap'), note = document.getElementById('comp-auto');
     if (reason){
